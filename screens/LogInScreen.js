@@ -19,9 +19,9 @@ import { styles } from '../assets/styles/Styles';
 import { LinearGradient } from 'expo';
 import VigButton from '../components/VigButton';
 
-export default class HomeScreen extends React.Component {
+export default class LogInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Log in',
     headerStyle: { 
       backgroundColor: Variables.darkColor,
       borderBottomWidth: 1,
@@ -161,7 +161,7 @@ export default class HomeScreen extends React.Component {
               'Check your spelling!',
               errorMessage,
               [
-                {text: 'Ok', onPress: () => inputPassword.focus()},
+                {text: 'Ok', onPress: () => inputEmail.focus()},
               ],
               { cancelable: false }
             )
@@ -202,7 +202,7 @@ export default class HomeScreen extends React.Component {
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <LinearGradient 
             colors={[ Variables.primaryColor , 'black']} 
-            style={styles.mainContainer}
+            style={styles.gradientContainer}
             start={[0,0]}
             end={[0,0.8]}
             >
@@ -216,7 +216,7 @@ export default class HomeScreen extends React.Component {
                 <Text style={screenStyles.stateCheckText}>Password: {this.state.password}</Text>
               </View> */}
             
-              <View style={styles.infoContainer}>
+              <View style={styles.inputContainer}>
 
                 <TextInput 
                 style={(this.state.isActiveInputUsername) ? styles.textInputActive : styles.textInput}
@@ -245,7 +245,7 @@ export default class HomeScreen extends React.Component {
                 autoCorrect={false}
                 onSubmitEditing={this._logIn.bind(this)}
                 ref={"txtPassword"}
-                value={this.state.password}
+                // value={this.state.password}
                 />
 
                 <View style={styles.buttonContainer}>
