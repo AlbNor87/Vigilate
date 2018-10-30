@@ -2,12 +2,32 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
-import {createStackNavigator} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
+import * as firebase from 'firebase';
+
 
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
+    isSignedIn: false
   };
+
+  componentDidMount() {
+    this.isSignedIn();
+  }
+
+  isSignedIn(){
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+
+      if(firebaseUser) {
+        this.setState({ isSignedIn: true})
+        console.log('You are signed in!');
+      } else {
+        console.log('Not logged in');
+      }
+
+    })
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {

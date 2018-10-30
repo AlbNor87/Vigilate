@@ -14,6 +14,7 @@ import {
 import { WebBrowser } from 'expo';
 
 import * as firebase from 'firebase';
+import Variables from '../constants/Variables';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBiPRK6dSTVxy2gvRnd4vV6kNHlsOCJmIY",
@@ -25,7 +26,7 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
-export default class ItemsScreen extends React.Component {
+export default class CategoriesScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -97,17 +98,11 @@ export default class ItemsScreen extends React.Component {
     return (
       <View style={styles.container}>
 
-        <Text style={styles.title}>Welcome!</Text>
+        <Text style={styles.title}>Categories</Text>
 
         <ListView
         dataSource={this.state.itemDataSource}
         renderRow={this.renderRow}
-        />
-
-        <Button
-          onPress={() => this.props.navigation.goBack(null)}   // 4. click on this
-          title="Go back"
-          style={{ marginTop: 50 }}
         />
 
         <View style={styles.buttonContainer}>
@@ -164,7 +159,7 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         width: "100%",
-        color: "dodgerblue",
+        color: Variables.primaryColor,
     },
   buttonContainer: {
     marginTop: 200,
@@ -206,7 +201,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#222222',
+    backgroundColor: 'black',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'

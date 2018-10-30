@@ -1,4 +1,5 @@
-const tintColor = '#2f95dc';
+import Variables from '../constants/Variables';
+const tintColor = Variables.primaryColor;
 
 export default {
   tintColor,

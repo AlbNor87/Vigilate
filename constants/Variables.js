@@ -6,18 +6,19 @@
 
 //Red
 const primaryColor = 'rgb(255, 50, 60)';
+
+
 const secondaryColor = 'black';
 const tertiaryColor = 'white';
 
 //Text colors
 const titleColor = 'rgb(255, 255, 255)';
-const textColor = 'rgb(224, 224, 224)';
+const textColor = 'rgb(240, 240, 240)';
 const placeHolderTextColor = "rgba(255,255,255,0.4)";
 
-//Almost black
-const backgroundColor = 'green';
-const backgroundColorDark = 'green';
+
 const backgroundColorSemiTransparent = "rgba(255,255,255,0.06)";
+const backgroundColorSemiTransparentThick = "rgba(255,255,255,0.17)";
 
 //Black
 const darkColor = '#000000';
@@ -32,8 +33,8 @@ const linearColorTwo = '#000000';
 export default {
   linearColorOne,
   linearColorTwo,
-  backgroundColorDark,
   backgroundColorSemiTransparent,
+  backgroundColorSemiTransparentThick,
   primaryColor,
   secondaryColor,
   tertiaryColor,

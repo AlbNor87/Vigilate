@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   View,
   StatusBar,
+  Button,
   Alert
 } from 'react-native';
 import * as firebase from 'firebase';
@@ -19,39 +20,39 @@ import { styles } from '../assets/styles/Styles';
 import { LinearGradient } from 'expo';
 import VigButton from '../components/VigButton';
 
-export default class LogInScreen extends React.Component {
+export default class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: 'Log in',
+    // header: null,
+    title: 'Sign in',
     headerStyle: { 
-      backgroundColor: Variables.darkColor,
-      borderBottomWidth: 1,
-      borderBottomColor: Variables.primaryColor,
+      backgroundColor: Variables.secondaryColor,
+      borderBottomWidth: 0,
     },
     headerTitleStyle: { color: Variables.titleColor },
   };
 
   state = {
-      isActiveInputUsername: false,
-      isActiveInputPassword: false,
-      email: '',
-      password: '',
-      
+    isActiveInputUsername: false,
+    isActiveInputPassword: false,
+    email: '',
+    password: '',
   }
 
   componentDidMount() {
     this.props.navigation.addListener('willFocus', payload => {this._onEnter();
     });
 
-  
+
   }
 
   _onEnter() {
-    console.log('You entered LogInScreen');
+    console.log('You entered SignInScreen');
 
     this.setState({
       email: '',
       password: '',
     })
+
     const inputEmail = this.refs.txtEmail;
     inputEmail.clear();
 
@@ -59,15 +60,16 @@ export default class LogInScreen extends React.Component {
       isActiveInputPassword: false
     })
 
-
     // this._clearInputs();
 
-    this._logOut();
+    // this._logOut();
 
     firebase.auth().onAuthStateChanged(firebaseUser => {
 
       if(firebaseUser) {
         console.log(firebaseUser);
+        console.log('You are logged in!');
+        this.props.navigation.navigate('AuthLoading'); 
       } else {
         console.log('Not logged in');
       }
@@ -101,121 +103,100 @@ export default class LogInScreen extends React.Component {
 
   }
 
-  async _logIn() {
+  async _signIn() {
 
-      const {email, password} = this.state;
-      const inputEmail = this.refs.txtEmail;
-      const inputPassword = this.refs.txtPassword;
+    const {email, password} = this.state;
+    const inputEmail = this.refs.txtEmail;
+    const inputPassword = this.refs.txtPassword;
 
-      if (!email || email == '') {
-        Alert.alert(
-          'Crendentials missing!',
-          'Fill in your fucking email, please.',
-          [
-            {text: 'Ok', onPress: () => this.refs.txtEmail.focus()},
-          ],
-          { cancelable: false }
-        )
-        return;
-      }
-
-      if (!password || password == '') {
-        Alert.alert(
-          'Wake up!',
-          "Did you seriously think you could log in without a password?",
-          [
-            {text: 'Ok', onPress: () => this.refs.txtEmail.focus()},
-          ],
-          { cancelable: false }
-        )
-        return;
-      }
-
-      // if (!email || email == '') {
-      //   alert('Fill in your fucking email!');
-      //       inputEmail.focus();
-      //   return;
-      // }
-      // if (!password || password == '') {
-      //   alert('Wrong password.');
-      //       inputPassword.focus();
-      //   return;
-      // }
-
-      try {
-        await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          if (errorCode === 'auth/wrong-password') {
-            Alert.alert(
-              'Wrong password!',
-              'Try again.',
-              [
-                {text: 'Ok', onPress: () => inputPassword.focus()},
-              ],
-              { cancelable: false }
-            )
-            
-          } else if (errorCode === 'auth/invalid-email') {
-            Alert.alert(
-              'Check your spelling!',
-              errorMessage,
-              [
-                {text: 'Ok', onPress: () => inputEmail.focus()},
-              ],
-              { cancelable: false }
-            )
-          } else {
-            alert(errorMessage);
-          }
-
-          console.log(error);
-        });
-      } catch(e) {
-        alert(e)
-      }
-
-      console.log('User:', firebase.auth().onAuthStateChanged(firebaseUser => {}));
-
-      firebase.auth().onAuthStateChanged(firebaseUser => {
-
-        if(firebaseUser) {
-          console.log(firebaseUser);
-          console.log('You are now successfully logged in!');
-          this.props.navigation.navigate('Items'); 
-        } else {
-          console.log('Not logged in');
-        }
-  
-      })
-  
+    if (!email || email == '') {
+      Alert.alert(
+        'Crendentials missing!',
+        'Fill in your email, please.',
+        [
+          {text: 'Ok', onPress: () => inputEmail.focus()},
+        ],
+        { cancelable: false }
+      )
+      return;
     }
 
-    
+    if (!password || password == '') {
+      Alert.alert(
+        'Crendentials missing!',
+        'Fill in your password, please.',
+        [
+          {text: 'Ok', onPress: () => inputPassword.focus()},
+        ],
+        { cancelable: false }
+      )
+      return;
+    }
+
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        if (errorCode === 'auth/wrong-password') {
+          Alert.alert(
+            'Wrong password!',
+            'Try again.',
+            [
+              {text: 'Ok', onPress: () => inputPassword.focus()},
+            ],
+            { cancelable: false }
+          )
+          
+        } else if (errorCode === 'auth/invalid-email') {
+          Alert.alert(
+            'Check your spelling!',
+            errorMessage,
+            [
+              {text: 'Ok', onPress: () => inputEmail.focus()},
+            ],
+            { cancelable: false }
+          )
+        } else {
+          alert(errorMessage);
+        }
+
+        console.log(error);
+      });
+    } catch(e) {
+      alert(e)
+    }
+
+    firebase.auth().onAuthStateChanged(firebaseUser => {
+
+      if(firebaseUser) {
+        console.log(firebaseUser);
+        console.log('You are now successfully logged in!');
+        this.props.navigation.navigate('AuthLoading');
+      } else {
+        console.log('Not logged in');
+      }
+
+    })
+
+  }
 
   render() {
     return (
-      
       <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content"/>
-        <KeyboardAvoidingView behavior='padding' style={styles.keyboardAvoindingContainer}>
+        <StatusBar barStyle="light-content"/>
+        <KeyboardAvoidingView behavior='padding' style={styles.container}>
           <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
             <LinearGradient 
-            colors={[ Variables.primaryColor , 'black']} 
-            style={styles.gradientContainer}
-            start={[0,0]}
-            end={[0,0.8]}
-            >
+              colors={[ Variables.primaryColor , 'black']} 
+              style={screenStyles.gradientContainer}
+              start={[0,0]}
+              end={[0,0.8]}
+              >
 
               <View style={screenStyles.logoContainer}>
-                <Image source={require('../assets/images/logo.png')}/>
+                  <Image source={require('../assets/images/logo.png')}/>
               </View>
 
-              {/* <View style={screenStyles.stateCheck}>
-                <Text style={screenStyles.stateCheckText}>Email: {this.state.email}</Text>
-                <Text style={screenStyles.stateCheckText}>Password: {this.state.password}</Text>
-              </View> */}
-            
               <View style={styles.inputContainer}>
 
                 <TextInput 
@@ -223,7 +204,7 @@ export default class LogInScreen extends React.Component {
                 onChangeText={(value) => this.setState({email: value.trim()})}
                 onFocus={() => this.setState({ isActiveInputUsername: true})}
                 onBlur={() => this.setState({ isActiveInputUsername: false})} 
-                placeholder="Username/Email"
+                placeholder="Email"
                 placeholderTextColor={Variables.placeHolderTextColor}
                 keyboardType="email-address"
                 returnKeyType="next"
@@ -232,7 +213,7 @@ export default class LogInScreen extends React.Component {
                 ref={"txtEmail"}
                 // value={this.state.email}
                 />
-                
+
                 <TextInput 
                 style={(this.state.isActiveInputPassword) ? styles.textInputActive : styles.textInput}
                 onChangeText={(value) => this.setState({password: value.trim()})}
@@ -243,7 +224,7 @@ export default class LogInScreen extends React.Component {
                 secureTextEntry={true}
                 returnKeyType="go"
                 autoCorrect={false}
-                onSubmitEditing={this._logIn.bind(this)}
+                onSubmitEditing={this._signIn.bind(this)}
                 ref={"txtPassword"}
                 // value={this.state.password}
                 />
@@ -252,42 +233,58 @@ export default class LogInScreen extends React.Component {
 
                   <VigButton
                     type='solid'
-                    onPress={this._logIn.bind(this)}
-                    value='Log in'/>
+                    onPress={this._signIn.bind(this)}
+                    value='Sign in'/>
 
                   <VigButton
                     type='hollow'
                     onPress={() => this.props.navigation.navigate('SignUp')  }
                     value='Sign up'/>
+                  
+                  {/* <VigButton
+                    type='solid'
+                    onPress={() => this.props.navigation.navigate('Main')  }
+                    value='Main'/> */}
+
 
                 </View>
-
               </View>
-
             </LinearGradient>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </SafeAreaView>
-      
     );
   }
 }
 
 const screenStyles = StyleSheet.create({
+  gradientContainer: {
+    position: 'relative',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
   logoContainer: {
     display: 'flex',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  stateCheck: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+  title: {
+    position: 'absolute',
+    zIndex: 2,
+    left: 0,
+    right: 0,
+    top: 0,
+    width: '100%',
+    fontSize: 46,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
   },
-  stateCheckText: {
-    fontSize: 9,
-    color: "white"
+  text: {
+    color: 'white'
   }
 });

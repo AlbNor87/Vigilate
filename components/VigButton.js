@@ -60,7 +60,7 @@ const buttonStyles = StyleSheet.create({
   },
   solid: {
     margin: 10,
-    width: '90%',
+    width: '100%',
     height: 50,
     backgroundColor: Variables.primaryColor,
     padding: 10,
@@ -77,7 +77,7 @@ const buttonStyles = StyleSheet.create({
   },
   hollow: {
     margin: 10,
-    width: '90%',
+    width: '100%',
     height: 50,
     padding: 10,
     borderRadius: 100,

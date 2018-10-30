@@ -19,8 +19,10 @@ export const styles = StyleSheet.create({
   //   alignItems: 'center'
   // },
   inputContainer: {
-    paddingBottom: 4,
-    width: '80%',
+    padding: 45,
+    paddingTop: 8,
+    paddingBottom: 35,
+    width: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -31,7 +33,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 25,
     margin: 10,
-    width: '90%',
+    width: '100%',
     height: 50,
     backgroundColor: Variables.backgroundColorSemiTransparent,
     borderRadius: 100,
@@ -42,19 +44,14 @@ export const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 25,
     margin: 10,
-    width: '90%',
+    width: '100%',
     height: 50,
-    backgroundColor: Variables.backgroundColorSemiTransparent,
+    backgroundColor: Variables.backgroundColorSemiTransparentThick,
     borderColor: Variables.titleColor,
     borderWidth: 1,
     borderRadius: 100,
   },
   title: {
-    // position: 'absolute',
-    // zIndex: 2,
-    // left: 0,
-    // right: 0,
-    // top: 0,
     marginTop: 30,
     width: '100%',
     fontSize: 46,
@@ -65,13 +62,13 @@ export const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: Variables.backgroundColorDark,
+    backgroundColor: Variables.secondaryColor,
     display: 'flex',
     flexDirection: 'column',
   },
   keyboardAvoindingContainer: {
     flex: 1,
-    backgroundColor: Variables.backgroundColorDark,
+    backgroundColor: Variables.secondaryColor,
     display: 'flex',
     flexDirection: 'column',
     marginBottom: 20
@@ -82,4 +79,11 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  contentContainer: {
+    padding: 45,
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
