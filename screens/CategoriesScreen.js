@@ -16,7 +16,7 @@ import VigButton from '../components/VigButton';
 export default class CategoriesScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('otherParam', 'Template'),
+      title: navigation.getParam('otherParam', 'Categories'),
       headerTintColor: Variables.primaryColor,
       headerStyle: { 
         backgroundColor: Variables.secondaryColor,

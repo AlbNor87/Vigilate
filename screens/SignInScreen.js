@@ -19,6 +19,7 @@ import Variables from '../constants/Variables';
 import { styles } from '../assets/styles/Styles';
 import { LinearGradient } from 'expo';
 import VigButton from '../components/VigButton';
+import { FirebaseApiKey } from '../env.js'
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -47,6 +48,7 @@ export default class SignInScreen extends React.Component {
 
   _onEnter() {
     console.log('You entered SignInScreen');
+    console.log('key: ', FirebaseApiKey)
 
     this.setState({
       email: '',
@@ -61,8 +63,6 @@ export default class SignInScreen extends React.Component {
     })
 
     // this._clearInputs();
-
-    // this._logOut();
 
     firebase.auth().onAuthStateChanged(firebaseUser => {
 

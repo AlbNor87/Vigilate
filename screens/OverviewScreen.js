@@ -19,9 +19,12 @@ import Variables from '../constants/Variables';
 import { styles } from '../assets/styles/Styles';
 import { LinearGradient } from 'expo';
 import VigButton from '../components/VigButton';
+import { FirebaseApiKey } from '../env.js'
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBiPRK6dSTVxy2gvRnd4vV6kNHlsOCJmIY",
+    apiKey: FirebaseApiKey,
+    // apiKey: "AIzaSyBiPRK6dSTVxy2gvRnd4vV6kNHlsOCJmIY",
+    // apiKey: "AIzaSyDJCbULqfk1vYomZZRLiEz4WOPgmLs3me8",
     authDomain: "vigilate-e05ea.firebaseapp.com",
     databaseURL: "https://vigilate-e05ea.firebaseio.com",
     projectId: "vigilate-e05ea",

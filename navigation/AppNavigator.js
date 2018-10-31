@@ -84,7 +84,7 @@ const MainTabNavigator = createBottomTabNavigator({
     Overview: OverviewStack,
     Activity: ActivityStack,
     Categories: CategoriesStack, 
-    Settings: SettingsStack, 
+    // Settings: SettingsStack, 
   }, {
     tabBarOptions: {
       style: {
