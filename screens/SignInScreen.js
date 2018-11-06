@@ -4,14 +4,12 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  TouchableHighlight,
   TouchableWithoutFeedback,
   SafeAreaView,
   Keyboard,
   KeyboardAvoidingView,
   View,
   StatusBar,
-  Button,
   Alert
 } from 'react-native';
 import * as firebase from 'firebase';
@@ -211,6 +209,8 @@ export default class SignInScreen extends React.Component {
                 autoCorrect={false}
                 onSubmitEditing={() => this.refs.txtPassword.focus() }
                 ref={"txtEmail"}
+                autoCapitalize={"none"}
+                selectionColor={Variables.tertiaryColor}
                 // value={this.state.email}
                 />
 
@@ -226,6 +226,8 @@ export default class SignInScreen extends React.Component {
                 autoCorrect={false}
                 onSubmitEditing={this._signIn.bind(this)}
                 ref={"txtPassword"}
+                autoCapitalize={"none"}
+                selectionColor={Variables.tertiaryColor}
                 // value={this.state.password}
                 />
 
@@ -233,11 +235,13 @@ export default class SignInScreen extends React.Component {
 
                   <VigButton
                     type='solid'
+                    margin={10}
                     onPress={this._signIn.bind(this)}
                     value='Sign in'/>
 
                   <VigButton
                     type='hollow'
+                    margin={10}
                     onPress={() => this.props.navigation.navigate('SignUp')  }
                     value='Sign up'/>
                   

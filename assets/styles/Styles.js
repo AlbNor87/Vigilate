@@ -10,6 +10,14 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center'
   },
+  gradientContainerCenter: {
+    position: 'relative',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   // mainContainer: {
   //   position: 'relative',
   //   flex: 1,
@@ -32,10 +40,10 @@ export const styles = StyleSheet.create({
     color: Variables.titleColor,
     padding: 10,
     paddingHorizontal: 25,
-    margin: 10,
+    marginVertical: 10,
     width: '100%',
     height: 50,
-    backgroundColor: Variables.backgroundColorSemiTransparent,
+    backgroundColor: Variables.semiTransparent,
     borderRadius: 100,
   },
   textInputActive: {
@@ -43,10 +51,10 @@ export const styles = StyleSheet.create({
     color: Variables.titleColor,
     padding: 10,
     paddingHorizontal: 25,
-    margin: 10,
+    marginVertical: 10,
     width: '100%',
     height: 50,
-    backgroundColor: Variables.backgroundColorSemiTransparentThick,
+    backgroundColor: Variables.semiTransparentThick,
     borderColor: Variables.titleColor,
     borderWidth: 1,
     borderRadius: 100,

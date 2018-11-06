@@ -1,17 +1,14 @@
 import React from 'react';
 import {
-  Image,
   StyleSheet,
   Text,
   TextInput,
-  TouchableHighlight,
   TouchableWithoutFeedback,
   SafeAreaView,
   Keyboard,
   KeyboardAvoidingView,
   View,
   StatusBar,
-  Button,
   Alert
 } from 'react-native';
 import * as firebase from 'firebase';
@@ -53,61 +50,6 @@ export default class SignUpScreen extends React.Component {
     console.log('You entered SignUpScreen');
   }
 
-  // async _register() {
-  //   console.log('Register triggered!');
-  //   const inputUsername = this.refs.txtUsername;
-  //   const inputEmail = this.refs.txtEmail;
-  //   const inputPassword = this.refs.txtPassword;
-  //   const inputRepeatPassword = this.refs.txtRepeatPassword;
-  //   const {email, username, password, repeatPassword} = this.state;
-
-  //   if(password && password === repeatPassword){
-
-  //     try {
-  //       await
-  //         firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
-  //           // [END createwithemail]
-  //           // callSomeFunction(); Optional
-  //           // var user = firebase.auth().currentUser;
-  //           user.updateProfile({
-  //             displayName: username
-  //           }).then(function() {
-  //             console.log('Username update successful!')
-  //           }, function(error) {
-  //             console.log(error)
-  //             console.error(error);
-  //           });        
-  //       }, function(error) {
-  //           // Handle Errors here.
-  //           var errorCode = error.code;
-  //           var errorMessage = error.message;
-  //           // [START_EXCLUDE]
-  //           if (errorCode == 'auth/weak-password') {
-  //               alert('The password is too weak.');
-  //           } else {
-  //               console.error(error);
-  //           }
-  //           // [END_EXCLUDE]
-  //       });
-  //     } catch(e) {
-  //       alert(e)
-  //     }
-
-  //   } else {
-
-  //     Alert.alert(
-  //       'Confirm Password!',
-  //       "The passwords you put in does not match, please make them match.",
-  //       [
-  //         {text: 'Ok', onPress: () => this.refs.txtPassword.focus()},
-  //       ],
-  //       { cancelable: false }
-  //     )
-
-  //   }
-
-  // }
-
   async _register() {
     console.log('Register triggered!');
     const inputUsername = this.refs.txtUsername;
@@ -141,13 +83,32 @@ export default class SignUpScreen extends React.Component {
     }
 
     if(password && password === repeatPassword){
+      // var user = firebase.auth().currentUser;
 
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password);
-        this.props.navigation.navigate('Main'); 
+        // const cateoryRef = firebase.database().ref('categories')
+        // const usersRef = firebase.database().ref('users');
+        // const newUserRef = usersRef.push();
+        
+        // newUserRef.set({
+        //   name: inputUsername,
+        //   email: inputEmail,
+        //   userid: user.uid
+        // })
+
       } catch(e) {
         alert(e)
       }
+
+      // try {
+      //   var user = firebase.auth().currentUser;
+      //   user.updateProfile({ displayName: inputUsername });
+      // } catch (e) {
+      //   alert(e)
+      // }
+
+      
 
     } else {
 
@@ -193,9 +154,9 @@ export default class SignUpScreen extends React.Component {
                   placeholderTextColor="rgba(255,255,255,0.4)"
                   returnKeyType="next"
                   autoCorrect={false}
-                  onChangeText={(value) => this.setState({username: value.trim()})}
                   onSubmitEditing={() => this.refs.txtEmail.focus() }
                   ref={"txtUsername"}
+                  selectionColor={Variables.tertiaryColor}
                   />
 
                   <TextInput 
@@ -208,9 +169,9 @@ export default class SignUpScreen extends React.Component {
                   keyboardType="email-address"
                   returnKeyType="next"
                   autoCorrect={false}
-                  onChangeText={(value) => this.setState({email: value.trim()})}
                   onSubmitEditing={() => this.refs.txtPassword.focus() }
                   ref={"txtEmail"}
+                  selectionColor={Variables.tertiaryColor}
                   />
 
                   <TextInput 
@@ -223,9 +184,9 @@ export default class SignUpScreen extends React.Component {
                   secureTextEntry={true}
                   returnKeyType="next"
                   autoCorrect={false}
-                  onChangeText={(value) => this.setState({password: value.trim()})}
                   onSubmitEditing={() => this.refs.txtRepeatPassword.focus() }
                   ref={"txtPassword"}
+                  selectionColor={Variables.tertiaryColor}
                   />
 
                   <TextInput 
@@ -238,9 +199,9 @@ export default class SignUpScreen extends React.Component {
                   secureTextEntry={true}
                   returnKeyType="go"
                   autoCorrect={false}
-                  onChangeText={(value) => this.setState({repeatPassword: value.trim()})}
                   ref={"txtRepeatPassword"}
                   onSubmitEditing={this._register.bind(this)}
+                  selectionColor={Variables.tertiaryColor}
                   />
 
                   <View style={styles.buttonContainer}>

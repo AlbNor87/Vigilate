@@ -4,6 +4,18 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import { createStackNavigator } from 'react-navigation';
 import * as firebase from 'firebase';
+import { FirebaseApiKey } from './env.js'
+
+const firebaseConfig = {
+  apiKey: FirebaseApiKey,
+  authDomain: "vigilate-6a3d8.firebaseapp.com",
+  databaseURL: "https://vigilate-6a3d8.firebaseio.com",
+  projectId: "vigilate-6a3d8",
+  storageBucket: "vigilate-6a3d8.appspot.com",
+  messagingSenderId: "1092208227345"
+}
+
+export const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 
 export default class App extends React.Component {

@@ -19,19 +19,7 @@ import Variables from '../constants/Variables';
 import { styles } from '../assets/styles/Styles';
 import { LinearGradient } from 'expo';
 import VigButton from '../components/VigButton';
-import { FirebaseApiKey } from '../env.js'
 
-const firebaseConfig = {
-    apiKey: FirebaseApiKey,
-    // apiKey: "AIzaSyBiPRK6dSTVxy2gvRnd4vV6kNHlsOCJmIY",
-    // apiKey: "AIzaSyDJCbULqfk1vYomZZRLiEz4WOPgmLs3me8",
-    authDomain: "vigilate-e05ea.firebaseapp.com",
-    databaseURL: "https://vigilate-e05ea.firebaseio.com",
-    projectId: "vigilate-e05ea",
-    storageBucket: "vigilate-e05ea.appspot.com"
-}
-
-const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class OverviewScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -53,6 +41,15 @@ export default class OverviewScreen extends React.Component {
 
   _onEnter() {
     console.log('You entered MainScreen');
+
+    var user = firebase.auth().currentUser;
+
+    if (user) {
+      console.log('CurrentUser.uid: ', user);
+    } else {
+      console.log('No user logged in: ');
+    }
+
   }
 
   _logOut() {
@@ -60,6 +57,30 @@ export default class OverviewScreen extends React.Component {
     firebase.auth().signOut();
     console.log('You are now signed out!')
     this.props.navigation.navigate('Auth');
+  }
+
+  _logUserInfo() {
+    console.log('Set DisplayName Launched!');
+    // firebase.auth().currentUser.updateProfile({
+    //   displayName: "AlbertDeNiro"
+    // })
+    var user = firebase.auth().currentUser;
+
+    // try {
+      
+    //   user.updateProfile({displayName: "AlbertDeNiro"});
+
+    // } catch (error) {
+
+    //   console.log("Error: ", error);
+      
+    // }
+
+    if (user) {
+      console.log('CurrentUser: ', user);
+    } else {
+      console.log('No user logged in: ');
+    }
   }
 
   render() {
@@ -83,11 +104,13 @@ export default class OverviewScreen extends React.Component {
 
                   <VigButton
                     type='solid'
-                    onPress={() => this.props.navigation.navigate('Categories')}
+                    margin={10}
+                    onPress={() => this.props.navigation.navigate('AddCategory')}
                     value='Get started'/>
 
                     <VigButton
                     type='hollow'
+                    margin={10}
                     onPress={this._logOut.bind(this)}
                     value='Sign out'/>
 

@@ -6,7 +6,10 @@ import SignUpScreen from '../screens/SignUpScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
 import OverviewScreen from '../screens/OverviewScreen';
 import ActivityScreen from '../screens/ActivityScreen';
+
 import CategoriesScreen from '../screens/CategoriesScreen';
+import AddCategoryScreen from '../screens/AddCategoryScreen';
+
 import TabBarIcon from '../components/TabBarIcon';
 import Variables from '../constants/Variables';
 
@@ -50,6 +53,7 @@ ActivityStack.navigationOptions = {
 
 const CategoriesStack = createStackNavigator({
   Categories: CategoriesScreen,
+  AddCategory: AddCategoryScreen,
 });
 
 CategoriesStack.navigationOptions = {
@@ -80,12 +84,14 @@ SettingsStack.navigationOptions = {
   ),
 };
 
-const MainTabNavigator = createBottomTabNavigator({
+const MainTabNavigator = createBottomTabNavigator(
+  {
     Overview: OverviewStack,
     Activity: ActivityStack,
     Categories: CategoriesStack, 
     // Settings: SettingsStack, 
-  }, {
+  },
+  {
     tabBarOptions: {
       style: {
         backgroundColor: Variables.secondaryColor,

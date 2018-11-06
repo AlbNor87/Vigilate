@@ -4,7 +4,7 @@
 //Blue
 // const primaryColor = 'rgb(0, 102, 255)';
 
-//Red
+// Red
 const primaryColor = 'rgb(255, 50, 60)';
 
 
@@ -15,30 +15,21 @@ const tertiaryColor = 'white';
 const titleColor = 'rgb(255, 255, 255)';
 const textColor = 'rgb(240, 240, 240)';
 const placeHolderTextColor = "rgba(255,255,255,0.4)";
-
-
-const backgroundColorSemiTransparent = "rgba(255,255,255,0.06)";
-const backgroundColorSemiTransparentThick = "rgba(255,255,255,0.17)";
-
-//Black
-const darkColor = '#000000';
+const semiTransparent = "rgba(255,255,255,0.06)";
+const semiTransparentThick = "rgba(255,255,255,0.17)";
 
 //Linear background
 const linearColorOne = primaryColor;
-const linearColorTwo = '#000000';
-
-
-
+const linearColorTwo = secondaryColor;
 
 export default {
   linearColorOne,
   linearColorTwo,
-  backgroundColorSemiTransparent,
-  backgroundColorSemiTransparentThick,
+  semiTransparent,
+  semiTransparentThick,
   primaryColor,
   secondaryColor,
   tertiaryColor,
-  darkColor,
   textColor,
   titleColor,
   placeHolderTextColor,

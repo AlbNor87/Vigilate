@@ -2,7 +2,46 @@ import React from 'react';
 import { Text, TouchableHighlight, StyleSheet, View } from 'react-native';
 import Variables from '../constants/Variables';
 
+
 export default class VigButton extends React.Component {
+
+  constructor(props){
+    super(props);
+  
+    this.state = {
+      width: '100%',
+      fontSize: 24
+    }
+
+  }
+
+  componentWillMount(){
+    if(this.props.width){
+      this.setState({
+        width: this.props.width
+      })
+    }
+    if(this.props.fontSize){
+      this.setState({
+        fontSize: this.props.fontSize
+      })
+    }
+    if(this.props.fontColor){
+      this.setState({
+        fontColor: this.props.fontColor
+      })
+    }
+    if(this.props.margin){
+      this.setState({
+        margin: this.props.margin
+      })
+    }
+  }
+
+  // componentDidMount() {
+  //   console.log('vigbutton state: ', this.state)
+  // }
+
 
   state = {
     isActive: false,
@@ -11,17 +50,18 @@ export default class VigButton extends React.Component {
   render() {
     if(this.props.type.toLowerCase() == "hollow") {
       return (
-        <TouchableHighlight style={buttonStyles.container}
+        <TouchableHighlight 
+          style={[buttonStyles.container,{ width: this.state.width, margin: this.state.margin}]}
           onPress={this.props.onPress}
-          onShowUnderlay={() => this.setState({ isActiveHollow: true})}
-          onHideUnderlay={() => this.setState({ isActiveHollow: false})}
+          onShowUnderlay={() => this.setState({ isActive: true})}
+          onHideUnderlay={() => this.setState({ isActive: false})}
           underlayColor="transparent"
           >
 
-          <View style={(this.state.isActiveHollow) ? buttonStyles.solid : buttonStyles.hollow}>
+          <View style={(this.state.isActive) ? buttonStyles.solid : buttonStyles.hollow}>
 
             <Text
-            style={(this.state.isActiveHollow) ? buttonStyles.solidText : buttonStyles.hollowText}
+            style={(this.state.isActive) ? [buttonStyles.solidText,{ fontSize: this.state.fontSize}] : [buttonStyles.hollowText,{ fontSize: this.state.fontSize}]}
             >{this.props.value}</Text>
 
           </View>
@@ -30,17 +70,17 @@ export default class VigButton extends React.Component {
       );
     } else {
       return (
-        <TouchableHighlight style={buttonStyles.container}
+        <TouchableHighlight style={[buttonStyles.container,{ width: this.state.width}]}
           onPress={this.props.onPress}
-          onShowUnderlay={() => this.setState({ isActiveHollow: true})}
-          onHideUnderlay={() => this.setState({ isActiveHollow: false})}
+          onShowUnderlay={() => this.setState({ isActive: true})}
+          onHideUnderlay={() => this.setState({ isActive: false})}
           underlayColor="transparent"
           >
 
-          <View style={(this.state.isActiveHollow) ? buttonStyles.hollow : buttonStyles.solid}>
+          <View style={(this.state.isActive) ? buttonStyles.hollow : buttonStyles.solid}>
 
             <Text
-            style={(this.state.isActiveHollow) ? buttonStyles.hollowText : buttonStyles.solidText}
+            style={(this.state.isActive) ? [buttonStyles.hollowText,{ fontSize: this.state.fontSize}] : [buttonStyles.solidText,{ fontSize: this.state.fontSize, color: this.state.fontColor}]}
             >{this.props.value}</Text>
 
           </View>
@@ -57,12 +97,14 @@ const buttonStyles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 2,
   },
   solid: {
-    margin: 10,
     width: '100%',
     height: 50,
     backgroundColor: Variables.primaryColor,
+    // borderColor: Variables.secondaryColor,
+    // borderWidth: 1,
     padding: 10,
     borderRadius: 100,
     display: 'flex',
@@ -76,7 +118,6 @@ const buttonStyles = StyleSheet.create({
     color: Variables.secondaryColor,
   },
   hollow: {
-    margin: 10,
     width: '100%',
     height: 50,
     padding: 10,
