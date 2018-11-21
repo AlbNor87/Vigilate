@@ -21,7 +21,7 @@ export default class AuthLoadingScreen extends React.Component {
     super(props);
     setTimeout(() => {
       this._bootstrapAsync();
-    }, 2300);
+    }, 3000);
   }
 
   // Fetch the token from storage then navigate to our appropriate place
@@ -71,11 +71,14 @@ export default class AuthLoadingScreen extends React.Component {
               end={[0,0.8]}
               >
 
-                  <Text>Loading... Hang on!</Text>
-                  <Image 
-                  source={require('../assets/images/spinner.svg')}
-                  />
-     
+                  <View style={screenStyles.container}>
+                    <Image 
+                    source={require('../assets/images/simple.svg')}
+                    style={{width: 230,}}
+                    // style={screenStyles.spinner}
+                    />
+                    <Text style={screenStyles.text}>Loading</Text>
+                  </View>
 
               
             </LinearGradient>
@@ -94,5 +97,20 @@ const screenStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  spinner: {
+    width: 300,
+  },
+  text: {
+    marginTop: -50,
+    fontSize: 24,
+    color: Variables.tertiaryColor,
+    textAlign: "center"
+  },
+  container: {
+    marginBottom: 120,
+    // textAlign: "center"
+
   }
+
 });

@@ -49,9 +49,9 @@ export default class ActivityScreen extends React.Component {
     categoriesRef.on('value', (snap) => {
         let categories = [];
         snap.forEach((child) => {
-            categories.push({
+          categories.push({
                 name: child.val().name,
-                _key: child.key
+                _key: child.key,
             });
         });
 
@@ -73,11 +73,6 @@ export default class ActivityScreen extends React.Component {
   
   getRef() {
     return firebaseApp.database().ref();  
-  }
-
-  componentWillMount() {
-    this.props.navigation.addListener('willFocus', payload => {this._onEnter();
-    });
   }
 
   componentDidMount() {
@@ -123,6 +118,7 @@ export default class ActivityScreen extends React.Component {
 
     //Input
     const category = item.name.toLowerCase();
+    const categoryId = item._key;
     const value = this.state[category];
 
     //Date
@@ -149,6 +145,7 @@ export default class ActivityScreen extends React.Component {
     newCommitsRef.set({
       userId: userId,
       category: category,
+      categoryId: categoryId,
       date: date,
       timeStamp: timeStamp,
       value: value
@@ -156,13 +153,31 @@ export default class ActivityScreen extends React.Component {
 
     console.log('Report triggered for', category, 'with a value of ', value);
 
+    this.setState({
+      [category]: 0
+    })
+
+    this[category]._resetInput();
+
+    Alert.alert(
+      'Report sent',
+      'Category: ' + item.name +'\n Minutes: ' + value,
+      [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ],
+      { cancelable: false }
+    )
+
   }
 
   _updateThisCounter(category, value){
-    console.log('It works!!! Category: ', category, ' Value: ', value);
     this.setState({
       [category]: value,
     })  
+  }
+
+  _sorry(){
+    alert("This doesn't work yet, sorry!")
   }
 
   render() {
@@ -185,51 +200,22 @@ export default class ActivityScreen extends React.Component {
                     data={this.state.categoryDataSource}
                     keyExtractor={item => item._key.toString()}
                     renderItem={({item}) => {
+                      
+                      // const categoryRef = item.name.toLowerCase();
+                      const category = item.name.toLowerCase();
+                      // this.ref[category] = React.createRef();
+
                       return (
                         <View style={screenStyles.li}> 
                         <Text style={screenStyles.liText}>{item.name}</Text>
                         
-                        <View style={screenStyles.reportContainer}>
+                        <View style={screenStyles.reportContainer}>                          
 
-                          {/* <TextInput 
-                          style={(this.state[isActiveInputName]) ? screenStyles.textInputActive : screenStyles.textInput}
-                          onChangeText= {this._onChanged.bind(this)}
-                          onFocus={() => this.setState({ [isActiveInputName]: true})}
-                          onBlur={() => this.setState({ [isActiveInputName]: false})} 
-                          placeholder="Minutes"
-                          placeholderTextColor="rgba(255,255,255,0.4)"
-                          returnKeyType="go"
-                          autoCorrect={false}
-                          // onChangeText={(value) => this.setState({ [categoryName]: value.trim() })}
-                          ref={"txtRepeatPassword"}
-                          autoCapitalize={"none"}
-                          keyboardType={"numeric"}
-                          selectionColor={Variables.tertiaryColor}
-                          value={String(this.state[categoryName])}
-                          // value={`${this.state[categoryName]}`}
-                          // onSubmitEditing={alert('Hey!')}
-                          /> */}
-                         
-
-                          {/* <TextInput 
-                          style={(this.state.isActiveInputCategoryName) ? styles.textInputActive : styles.textInput}
-                          onChangeText={(value) => this.setState({categoryName: value.trim()})}
-                          onFocus={() => this.setState({ isActiveInputCategoryName: true})}
-                          // onBlur={() => this.setState({ isActiveInputCategoryName: false})} 
-                          placeholder="Minutes"
-                          placeholderTextColor="rgba(255,255,255,0.4)"
-                          returnKeyType="go"
-                          autoCorrect={false}
-                          onChangeText={(value) => this.setState({categoryName: value.trim()})}
-                          // onSubmitEditing={this._addCategory.bind(this)}
-                          ref={"txtCategoryName"}
-                          /> */}
-
-                          <VigNumInput category={item.name} triggerParentUpdate={this._updateThisCounter.bind(this)}/>
+                          <VigNumInput ref={instance => { this[category] = instance; }} category={category} triggerParentUpdate={this._updateThisCounter.bind(this)}/>
 
                           <VigButton
                           type='solid'
-                          onPress={this._log.bind(this)}
+                          onPress={this._sorry}
                           width={50}
                           value='+30'
                           fontSize={16}

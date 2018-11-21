@@ -24,6 +24,22 @@ export default class VigButton extends React.Component {
     }
   }
 
+  _testit(){
+    console.log('Det verkar änna funka vettu! Value: ', this.state.value);
+    console.log(this.state);
+    this.setState({
+      value: 0
+    })
+  }
+
+  _resetInput(){
+    console.log('reset input triggered');
+
+    this.setState({
+      value: 0
+    })
+  }
+
   // componentDidMount() {
   //   console.log('VigNumInput: ', this.state)
   // }

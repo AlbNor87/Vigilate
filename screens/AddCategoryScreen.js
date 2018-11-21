@@ -53,16 +53,13 @@ export default class AddCategoryScreen extends React.Component {
     const categoriesRef = firebase.database().ref('categories').child(userId);
     const newCategoryRef = categoriesRef.push();
 
-    const commitsRef = firebase.database().ref('commits').child(userId);
-    const newCommitsRef = commitsRef.push();
-
     newCategoryRef.set({
       name: this.state.categoryName,
     })
 
-    newCommitsRef.set({
-      name: this.state.categoryName,
-    })
+    // newCommitsRef.set({
+    //   name: this.state.categoryName,
+    // })
 
     this.props.navigation.navigate('Categories');
 
@@ -85,6 +82,8 @@ export default class AddCategoryScreen extends React.Component {
             <View style={styles.contentContainer}>
                 <View style={styles.buttonContainer}>
 
+                  <Text style={screenStyles.title}>Add category</Text>
+
                   <TextInput 
                   style={(this.state.isActiveInputCategoryName) ? styles.textInputActive : styles.textInput}
                   onChangeText={(value) => this.setState({categoryName: value.trim()})}
@@ -99,13 +98,30 @@ export default class AddCategoryScreen extends React.Component {
                   selectionColor={Variables.tertiaryColor}
                   />
 
+                  <TextInput 
+                  style={styles.textInput}
+                  onChangeText={(value) => this.setState({categoryName: value.trim()})}
+                  // onFocus={() => this.setState({ isActiveInputCategoryName: true})}
+                  // onBlur={() => this.setState({ isActiveInputCategoryName: false})} 
+                  placeholder="Measured in (minutes)"
+                  placeholderTextColor="rgba(255,255,255,0.4)"
+                  returnKeyType="go"
+                  autoCorrect={false}
+                  onSubmitEditing={this._addCategory.bind(this)}
+                  ref={"txtCategoryName"}
+                  selectionColor={Variables.tertiaryColor}
+                  editable={false} selectTextOnFocus={false}
+                  />
+
                    <VigButton
                   type='solid'
+                  margin={10}
                   onPress={this._addCategory.bind(this)}
                   value='Add Category'/>
 
                   <VigButton
                   type='hollow'
+                  margin={10}
                   onPress={() => this.props.navigation.goBack()}
                   value='Go back'/>
 
@@ -123,4 +139,11 @@ export default class AddCategoryScreen extends React.Component {
 
 //Screen specific styles...
 const screenStyles = StyleSheet.create({
+  title: {
+    fontSize: 39,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 5,
+  },
 });

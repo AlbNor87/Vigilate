@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Image,
+  // Image,
   StyleSheet,
   Text,
   TextInput,
@@ -17,7 +17,8 @@ import Variables from '../constants/Variables';
 import { styles } from '../assets/styles/Styles';
 import { LinearGradient } from 'expo';
 import VigButton from '../components/VigButton';
-import { FirebaseApiKey } from '../env.js'
+import { FirebaseApiKey } from '../env.js';
+import Image from 'react-native-remote-svg';
 
 export default class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -109,8 +110,8 @@ export default class SignInScreen extends React.Component {
 
     if (!email || email == '') {
       Alert.alert(
-        'Crendentials missing!',
-        'Fill in your email, please.',
+        'Crendentials missing',
+        'Please fill in your email',
         [
           {text: 'Ok', onPress: () => inputEmail.focus()},
         ],
@@ -121,8 +122,8 @@ export default class SignInScreen extends React.Component {
 
     if (!password || password == '') {
       Alert.alert(
-        'Crendentials missing!',
-        'Fill in your password, please.',
+        'Crendentials missing',
+        'Please fill in your password.',
         [
           {text: 'Ok', onPress: () => inputPassword.focus()},
         ],
@@ -137,8 +138,8 @@ export default class SignInScreen extends React.Component {
         var errorMessage = error.message;
         if (errorCode === 'auth/wrong-password') {
           Alert.alert(
-            'Wrong password!',
-            'Try again.',
+            'Wrong password',
+            'Please try again.',
             [
               {text: 'Ok', onPress: () => inputPassword.focus()},
             ],
@@ -147,7 +148,8 @@ export default class SignInScreen extends React.Component {
           
         } else if (errorCode === 'auth/invalid-email') {
           Alert.alert(
-            'Check your spelling!',
+            'Invalid email',
+            'Please try again.',
             errorMessage,
             [
               {text: 'Ok', onPress: () => inputEmail.focus()},
@@ -192,7 +194,9 @@ export default class SignInScreen extends React.Component {
               >
 
               <View style={screenStyles.logoContainer}>
-                  <Image source={require('../assets/images/logo.png')}/>
+                  {/* <Image source={require('../assets/images/textlogo.svg')} style={{width: 220,}}/> */}
+                  <Image source={require('../assets/images/logo_text.svg')} style={{width: 235, marginTop: 8,}}/>
+                  {/* <Image source={require('../assets/images/logo_old.png')}/> */}
               </View>
 
               <View style={styles.inputContainer}>
@@ -231,7 +235,7 @@ export default class SignInScreen extends React.Component {
                 // value={this.state.password}
                 />
 
-                <View style={styles.buttonContainer}>
+                {/* <View style={styles.buttonContainer}> */}
 
                   <VigButton
                     type='solid'
@@ -251,7 +255,7 @@ export default class SignInScreen extends React.Component {
                     value='Main'/> */}
 
 
-                </View>
+                {/* </View> */}
               </View>
             </LinearGradient>
           </TouchableWithoutFeedback>
@@ -290,5 +294,8 @@ const screenStyles = StyleSheet.create({
   },
   text: {
     color: 'white'
+  },
+  logo: {
+    width: 200,
   }
 });

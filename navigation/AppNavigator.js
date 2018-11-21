@@ -4,6 +4,7 @@ import { createSwitchNavigator, createStackNavigator, createBottomTabNavigator }
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 import OverviewScreen from '../screens/OverviewScreen';
 import ActivityScreen from '../screens/ActivityScreen';
 
@@ -68,6 +69,22 @@ CategoriesStack.navigationOptions = {
   ),
 };
 
+const WelcomeStack = createStackNavigator({
+  Welcome: WelcomeScreen,
+});
+
+WelcomeStack.navigationOptions = {
+  tabBarLabel: 'Welcome',
+  tabBarVisible: true,
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={
+        Platform.OS === 'ios' ? `ios-body${focused ? '' : '-outline'}` : 'md-options'}
+    />
+  ),
+};
+
 const SettingsStack = createStackNavigator({
   Settings: CategoriesScreen,
 });
@@ -86,9 +103,11 @@ SettingsStack.navigationOptions = {
 
 const MainTabNavigator = createBottomTabNavigator(
   {
+    Welcome: WelcomeStack,
     Overview: OverviewStack,
     Activity: ActivityStack,
-    Categories: CategoriesStack, 
+    Categories: CategoriesStack,
+    
     // Settings: SettingsStack, 
   },
   {

@@ -70,7 +70,7 @@ export default class VigButton extends React.Component {
       );
     } else {
       return (
-        <TouchableHighlight style={[buttonStyles.container,{ width: this.state.width}]}
+        <TouchableHighlight style={[buttonStyles.container,{ width: this.state.width, margin: this.state.margin}]}
           onPress={this.props.onPress}
           onShowUnderlay={() => this.setState({ isActive: true})}
           onHideUnderlay={() => this.setState({ isActive: false})}

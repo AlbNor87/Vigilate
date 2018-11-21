@@ -12,7 +12,9 @@ import {
   FlatList,
   Text,
   ActivityIndicator,
-  Alert
+  Alert,
+  RefreshControl
+
 } from 'react-native';
 import Variables from '../constants/Variables';
 import { styles } from '../assets/styles/Styles';
@@ -41,13 +43,15 @@ export default class OverviewScreen extends React.Component {
     this.state = {
         overviewDataSource: [
           {
-            categoryName: 'test',
-            numberOfCommits: 7,
-            totalValue: 25,
+            categoryName: 'start',
+            numberOfCommits: 0,
+            totalValue: 0,
             _key: 2178
           }
         ],
-        isLoading: true,
+        tempData: [],
+        // isLoading: true,
+        refreshing: false,
     }
     var userId = firebase.auth().currentUser.uid;
     this.categoriesRef = this.getRef().child('categories').child(userId);
@@ -61,9 +65,6 @@ export default class OverviewScreen extends React.Component {
       categoriesRef.on('value', (snap) => {
         let categories = [];
         snap.forEach((child) => {
-          console.log('child', child);
-          console.log('child-key', child.key);
-
             categories.push({
                 name: child.val().name.toLowerCase(),
                 _key: child.key
@@ -80,99 +81,79 @@ export default class OverviewScreen extends React.Component {
 
   async _getData(commitsRef, categoriesRef){
 
-  //   this.setState({
-  //     overviewDataSource: [
-  //       {
-  //         categoryName: 'Reset',
-  //         numberOfCommits: 0,
-  //         totalValue: 0,
-  //         _key: 2178
-  //       }
-  //     ],
-  //   }
-  // )
-
-    // console.log('GetData triggered');
-    // console.log('This.state: ', this.state);
+    this.setState({
+        overviewDataSource: [
+          {
+            categoryName: 'Reset',
+            numberOfCommits: 0,
+            totalValue: 0,
+            _key: 2178
+          }
+        ],
+      }
+    )
 
     const categories = await this._getCategories(categoriesRef);
     let overviewDataSource = [];
+    
+    console.log('Array start: ', overviewDataSource);
 
-    const that = this;
+    // (async () => {
 
-    // console.log('that: ', that);
-  
+
+    //   const result = await 
+    // })().catch(err => {
+    //     console.error(err);
+    // });
+
+    // console.log('Commits: ', commits);
+
     //Loop through all commits in each and every category...
-    categories.forEach((category, index) => {
+    categories.forEach(async (category, index) => {
 
-
-      // console.log('Looping through category: ', index);
-      // console.log('CategoryName: ', category.name);
-      // console.log('Category key: ', category._key);
-
-      const query = new Promise(function(resolve, reject) {
-          let query = commitsRef.orderByChild('categoryId').equalTo(categories[index]._key);
-          // let query = commitsRef.orderByChild('categoryId').equalTo(categories[index]._key);
-          resolve(query);
-      });
-
+      // overviewDataSource.push('kategori' + index);
+      // console.log('OverviewArray: ', overviewDataSource);
+      let query = await commitsRef.orderByChild('categoryId').equalTo(categories[index]._key);
+      
       let numberOfCommits = 0;
       let totalValue = 0;
       let timeStamp = 0;
-      // let totalValue2 = 0;
-      
-      query.then((query)=>{
-        query.on('value', snap => {
-          //For each commit...
-          snap.forEach((child) => {
-              numberOfCommits++;
-              totalValue = totalValue + child.val().value;
-              timeStamp = child.val().timeStamp;
-              // console.log('Child in looop: ', child)
-              // console.log('TimeStamp: ', timeStamp)
-              // console.log('Total value: ', totalValue)
-              // console.log('numberOfCommits: ', numberOfCommits)
-          });
 
-          const categoryInfo =  {
-              categoryName: category.name, 
-              numberOfCommits: numberOfCommits,
-              totalValue: totalValue,
-              _key: timeStamp + Math.random()
-            }
+      query.on('value', snap => {
+        //For each commit...
+        snap.forEach((child) => {
+            numberOfCommits++;
+            totalValue = totalValue + child.val().value;
+            timeStamp = child.val().timeStamp;
+            // console.log('Child in looop: ', child)
+            // console.log('TimeStamp: ', timeStamp)
+            // console.log('Total value: ', totalValue)
+            // console.log('numberOfCommits: ', numberOfCommits)
+        
+        }); //ForEachCommit ENDS
 
-          overviewDataSource.push(categoryInfo);
-          // const that = this;
-          // this.setState({
-          //   isLoading: false
-          // })
+        const categoryInfo =  {
+          categoryName: category.name, 
+          numberOfCommits: numberOfCommits,
+          totalValue: totalValue,
+          _key: category.name,
+        }
 
-          // console.log('overviewDataSource: ', overviewDataSource);
+        overviewDataSource.push(categoryInfo);
+        console.log('Array efter kategori-varv' + index + ' : ', overviewDataSource);
 
-          that.setState(
-            {...that.state, 
-              overviewDataSource: overviewDataSource,
-              isLoading: false}
-          )
-          
-          // console.log('overviewDataSource: ', overviewDataSource);
-          // console.log('NewDataSource (banan predicted): ', newDataSource)
+      });
+    }) //ForEachCategory ENDS
 
-          // newDataSource = overviewDataSource;
-          // console.log('NewDataSource: ', newDataSource)
-          
-          
+    console.log('Array End: ', overviewDataSource);
 
-        });
-
+    setTimeout(() => {
+      console.log('Array End: ', overviewDataSource);
+      this.setState({
+        overviewDataSource: overviewDataSource
       })
-    })
-    // console.log('overviewDataSource: ', overviewDataSource);
-    // console.log('this.overviewDataSource before set: ', this.state.overviewDataSource);
-    // that.setState(
-    //   {overviewDataSource: newDataSource }
-    // )
-    // console.log('this.overviewDataSource after set: ', this.state.overviewDataSource);
+    }, 5000);
+
   }
   
   getRef() {
@@ -180,14 +161,15 @@ export default class OverviewScreen extends React.Component {
   }
 
   componentDidMount() {
-    // this.getData(this.commitsRef, this.categoriesRef);
+    this._getData(this.commitsRef, this.categoriesRef);
     this.props.navigation.addListener('willFocus', payload => {this._onEnter();
     });
   }
 
   _onEnter() {
     console.log('You entered Overview Screen');
-    this._getData(this.commitsRef, this.categoriesRef);
+    console.log('This.state: ', this.state);
+    // this._getData(this.commitsRef, this.categoriesRef);
   
   }
 
@@ -213,6 +195,14 @@ export default class OverviewScreen extends React.Component {
       isLoading: false
     })
   }
+  _refresh() {
+    // console.log('refresh this.state: ', this.state);
+    this.setState({
+      refreshing: true
+    })
+    // this._getData(this.commitsRef, this.categoriesRef);
+    
+  }
 
   render() {
     return (
@@ -227,11 +217,20 @@ export default class OverviewScreen extends React.Component {
             end={[0,0.8]}
             >
              {/* { this.state.isLoading ? <ActivityIndicator size="large" /> : null } */}
-             { this.state.isLoading ? <VigSpinner/> : 
+             {/* { this.state.isLoading ? <VigSpinner/> : null } */}
              
              <FlatList
              data={this.state.overviewDataSource}
              keyExtractor={item => item._key.toString()}
+             refreshControl={
+              <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._refresh.bind(this)}
+                  title="Refreshing!"
+                  tintColor="#fff"
+                  titleColor="#fff"
+              />}
+
              renderItem={({item}) => {
 
                // console.log('item overview', item)
@@ -239,24 +238,10 @@ export default class OverviewScreen extends React.Component {
                return(
                  <View style={screenStyles.li}> 
                    <Text style={screenStyles.liText}>{item.categoryName}</Text>
-                   <View style={screenStyles.infoWrapper}> 
-                    <View style={screenStyles.infoContainer}>
-                      <Text style={screenStyles.liTextInfoFat}>Today</Text>
-                      <Text style={screenStyles.liTextInfo}>Reports: {item.numberOfCommits}</Text>
+                   <View style={screenStyles.info}>
+                      <Text style={screenStyles.liTextInfo}>commits: {item.numberOfCommits}</Text>
+                      {/* <Text style={screenStyles.liTextInfo}>Week: 0 </Text> */}
                       <Text style={screenStyles.liTextInfo}>Total: {item.totalValue} </Text>
-                    </View>
-
-                    <View style={screenStyles.infoContainer}>
-                      <Text style={screenStyles.liTextInfoFat}>Week</Text>
-                      <Text style={screenStyles.liTextInfo}>Reports: {item.numberOfCommits}</Text>
-                      <Text style={screenStyles.liTextInfo}>Total: {item.totalValue} </Text>
-                    </View>
-
-                    <View style={screenStyles.infoContainer}>
-                      <Text style={screenStyles.liTextInfoFat}>Ever</Text>
-                      <Text style={screenStyles.liTextInfo}>Reports: {item.numberOfCommits}</Text>
-                      <Text style={screenStyles.liTextInfo}>Total: {item.totalValue} </Text>
-                    </View>
                    </View>
                  </View>
                  )
@@ -265,7 +250,7 @@ export default class OverviewScreen extends React.Component {
            extraData={this.state}
          />  
             
-            }
+            
 
               {/* <View style={styles.activityIndicatorContainer}> */}
                 {/* <ActivityIndicator animating={this.state.isLoading} size="large" color={Variables.tertiaryColor}/> */}
@@ -325,12 +310,12 @@ const screenStyles = StyleSheet.create({
     borderWidth: 1,
     padding: 16,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
   liText: {
-      fontSize: 26,
+      fontSize: 22,
       fontWeight: "bold",
       color: Variables.tertiaryColor
   },
@@ -338,11 +323,6 @@ const screenStyles = StyleSheet.create({
     fontSize: 16,
     // fontWeight: "bold",
     color: Variables.tertiaryColor,
-},
-liTextInfoFat: {
-  fontSize: 20,
-  fontWeight: "bold",
-  color: Variables.tertiaryColor,
 },
   contentContainer: {
     padding: 8,
@@ -356,20 +336,16 @@ liTextInfoFat: {
   bgColor: {
     backgroundColor: 'transparent'
   },
-  infoContainer: {
-    marginTop: 8,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    // marginHorizontal: 15,
-  },
-  infoWrapper: {
+  info: {
     width: "100%",
-    marginTop: 8,
+    // borderBottomColor: Variables.primaryColor,
+    // borderColor: 'transparent',
+    // backgroundColor: 'transparent',
+    // borderWidth: 1,
+    padding: 16,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    // alignItems: 'center',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   }
 });

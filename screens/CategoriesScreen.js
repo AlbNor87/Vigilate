@@ -37,16 +37,17 @@ export default class CategoriesScreen extends React.Component {
 
   constructor(props) {
     super(props);
-    let ds = new ListView.DataSource({rowHasChanged:(r1, r2) => r1 !== r2 });
+    // let ds = new ListView.DataSource({rowHasChanged:(r1, r2) => r1 !== r2 });
     this.state = {
-        categoryDataSource: ds,
+        // categoryDataSource: ds,
         categoryDataSource2: [],
         colorChanged: false,
     }
     var userId = firebase.auth().currentUser.uid;
     this.categoriesRef = this.getRef().child('categories').child(userId);
-    this.renderRow = this.renderRow.bind(this);
-    this.pressRow = this.pressRow.bind(this);
+    this.commitsRef = this.getRef().child('commits').child(userId);
+    // this.renderRow = this.renderRow.bind(this);
+    // this.pressRow = this.pressRow.bind(this);
   }
   
   getCategories(categoriesRef) {
@@ -61,7 +62,7 @@ export default class CategoriesScreen extends React.Component {
         });
         // console.log('categories array: ', categories);
         this.setState({
-            categoryDataSource: this.state.categoryDataSource.cloneWithRows(categories),
+            // categoryDataSource: this.state.categoryDataSource.cloneWithRows(categories),
             categoryDataSource2: categories
         });
     });
@@ -71,14 +72,6 @@ export default class CategoriesScreen extends React.Component {
   getRef() {
     return firebaseApp.database().ref();  
   }
-
-  componentWillMount() {
-    // this.getCategories(this.categoriesRef);
-    this.props.navigation.addListener('willFocus', payload => {this._onEnter();
-    });
-  }
-
-  
 
   pressRow(category) {
     console.log(category);
@@ -107,29 +100,87 @@ export default class CategoriesScreen extends React.Component {
   
   }
 
-  _loadColor() {
-    console.log('LoadColor Triggered!');
-    Variables.primaryColor = 'red';
-    this.setState({
-      colorChanged: !this.state.colorChanged,
-    })
-    console.log('colorChanged: ', this.state.colorChanged)
-  }
+  // _loadColor() {
+  //   console.log('LoadColor Triggered!');
+  //   Variables.primaryColor = 'red';
+  //   this.setState({
+  //     colorChanged: !this.state.colorChanged,
+  //   })
+  //   console.log('colorChanged: ', this.state.colorChanged)
+  // }
 
   _log() {
-    console.log('DataSource2: ', this.state.categoryDataSource2)
+    // console.log('DataSource2: ', this.state.categoryDataSource2)
+   
   }
 
   _deleteCategory(item) {
     const userId = firebase.auth().currentUser.uid;
     const categoryId = item._key;
+    console.log('itemname', item.name)
     const categoryRef = firebase.database().ref('categories').child(userId).child(categoryId);
+    // const commits = firebase.database().ref('commits').child(userId).child(categoryId);
+    // const categoryRef = firebase.database().ref('commits').child(userId).child(categoryId);
+
+    // let query = this.commitsRef.orderByChild('categoryId').equalTo(item._key);
+    // console.log('query', query)
+    // console.log('commits', commits)
+
+
+    // var ref = firebase.database().ref('commits');
+    // commitsRef = this.getRef().child('commits').child(userId);
+
+    // console.log('commitsRef: ', commitsRef);
+    // commitsRef.orderByChild('category').equalTo(item.name).on('child_added', (snapshot) => {
+    //   console.log(snapshot)
+    //  snapshot.ref.remove()
+    // });
+
+    // const ref = firebase.database().ref('images');
+    // const commitsRef = this.getRef().child('commits').child(userId);
+    // console.log('commitRef', commitsRef);
+
+    // commitsRef.on('value', (snap) => {
+    //   console.log('snap', snap)
+    //   // let categories = [];
+    //   // snap.forEach((child) => {
+    //   //   categories.push({
+    //   //         name: child.val().name,
+    //   //         _key: child.key,
+    //   //     });
+    //   });
+
+    // const ref = this.getRef().child('commits').child(userId);
+    // ref.orderByChild('categoryId').equalTo(categoryId).once('value', snapshot => {
+    //   console.log('snap', snapshot)
+    //   const updates = {};
+    //   snapshot.forEach(child => updates[child.key] = null);
+    //   ref.update(updates);
+    // });
+
+    // commitsRef.orderByChild('category').equalTo(item.name).once('value', snapshot => {
+    //   console.log('snapshot: ', snapshot)
+    //     // const updates = {};
+    //     // snapshot.forEach(child => updates[child.key] = null);
+    //     // ref.update(updates);
+    // });
+    const that = this;
 
     Alert.alert(
       'Confirm deletion',
-      'Are you sure you want to do this? All category data will be permanently deleted.',
+      'Are you sure you want to do this?\nAll category data will be permanently deleted.',
       [
+        // {text: 'Ok', onPress: () => commits.remove()
         {text: 'Ok', onPress: () => categoryRef.remove()
+        // .then(function() {
+        //   const ref = that.getRef().child('commits').child(userId);
+        //   ref.orderByChild('categoryId').equalTo(categoryId).once('value', snapshot => {
+        //     console.log('snap', snapshot)
+        //     const updates = {};
+        //     snapshot.forEach(child => updates[child.key] = null);
+        //     ref.update(updates);
+        //   });
+        // })
         .then(function() {
           console.log("Remove succeeded.")
         })
@@ -186,11 +237,13 @@ export default class CategoriesScreen extends React.Component {
 
                   <VigButton
                   type='solid'
+                  margin={10}
                   onPress={() => this.props.navigation.navigate('AddCategory')}
                   value='Add category'/>
 
                   {/* <VigButton
                   type='hollow'
+                  margin={10}
                   onPress={this._log.bind(this)}
                   value='Log'/> */}
 

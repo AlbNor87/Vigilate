@@ -208,11 +208,13 @@ export default class SignUpScreen extends React.Component {
 
                   <VigButton
                     type='solid'
+                    margin={10}
                     onPress={this._register.bind(this)}
                     value='Submit'/>
 
                     <VigButton
                     type='hollow'
+                    margin={10}
                     onPress={() => this.props.navigation.goBack()}
                     value='Go back'/>
 

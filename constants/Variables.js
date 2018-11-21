@@ -2,11 +2,10 @@
 // const primaryColor = 'rgb(30, 250, 70)';
 
 //Blue
-// const primaryColor = 'rgb(0, 102, 255)';
+const primaryColor = 'rgb(0, 102, 255)';
 
 // Red
-const primaryColor = 'rgb(255, 50, 60)';
-
+// const primaryColor = 'rgb(255, 50, 60)';
 
 const secondaryColor = 'black';
 const tertiaryColor = 'white';

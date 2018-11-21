@@ -1,14 +1,14 @@
 <svg viewBox="0 0 600 274" fill="none" xmlns="http://www.w3.org/2000/svg" id="el_cWOuggacjbs"><style>@-webkit-keyframes el_Vq1a4NQIzBo_91Rn4o-UF_Animation{
-49.44%{-webkit-transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);}
+48.89%{-webkit-transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);}
 50%{-webkit-transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);}
-82.78%{-webkit-transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);}
+82.22%{-webkit-transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);}
 83.33%{-webkit-transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);}
 0%{-webkit-transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);}
 100%{-webkit-transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);}}
 @keyframes el_Vq1a4NQIzBo_91Rn4o-UF_Animation{
-49.44%{-webkit-transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);}
+48.89%{-webkit-transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);}
 50%{-webkit-transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);}
-82.78%{-webkit-transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);}
+82.22%{-webkit-transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(540deg) translate(-300px, -137px);}
 83.33%{-webkit-transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);}
 0%{-webkit-transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(0deg) translate(-300px, -137px);}
 100%{-webkit-transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);transform: translate(300px, 137px) rotate(360deg) translate(-300px, -137px);}}
@@ -28,7 +28,7 @@
 66.67%{-webkit-transform: translate(300px, 137px) scale(1, 1) translate(-300px, -137px);transform: translate(300px, 137px) scale(1, 1) translate(-300px, -137px);}
 83.33%{-webkit-transform: translate(300px, 137px) scale(1, 0) translate(-300px, -137px);transform: translate(300px, 137px) scale(1, 0) translate(-300px, -137px);}
 100%{-webkit-transform: translate(300px, 137px) scale(1, 1) translate(-300px, -137px);transform: translate(300px, 137px) scale(1, 1) translate(-300px, -137px);}}
-#el_cWOuggacjbs *{-webkit-animation-duration: 6s;animation-duration: 6s;-webkit-animation-iteration-count: infinite;animation-iteration-count: infinite;-webkit-animation-timing-function: cubic-bezier(0, 0, 1, 1);animation-timing-function: cubic-bezier(0, 0, 1, 1);}
+#el_cWOuggacjbs *{-webkit-animation-duration: 3s;animation-duration: 3s;-webkit-animation-iteration-count: infinite;animation-iteration-count: infinite;-webkit-animation-timing-function: cubic-bezier(0, 0, 1, 1);animation-timing-function: cubic-bezier(0, 0, 1, 1);}
 #el_Vq1a4NQIzBo{fill: black;}
 #el_Vq1a4NQIzBo_SN0dcUP8V{-webkit-animation-name: el_Vq1a4NQIzBo_SN0dcUP8V_Animation;animation-name: el_Vq1a4NQIzBo_SN0dcUP8V_Animation;-webkit-animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);}
 #el_Vq1a4NQIzBo_91Rn4o-UF{-webkit-animation-name: el_Vq1a4NQIzBo_91Rn4o-UF_Animation;animation-name: el_Vq1a4NQIzBo_91Rn4o-UF_Animation;-webkit-animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);}</style>
